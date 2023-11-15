@@ -44,12 +44,12 @@ const Input = ({ id, label, type, disabled, formatPrice, register, required, err
           type={type}
           {...register(id, { required })}
           {...rest}
-          className={`w-full p-2 border rounded-md shadow-sm font-light transition 
-        focus:ring-orange-400 focus:border-orange-400 
-        disabled:opacity-70 disabled:cursor-not-allowed
-        ${formatPrice ? "pl-8" : ""}
-        ${errors[id] ? "border-red-500" : "border-neutral-300"}
-        ${errors[id] ? "focus:border-rose-500" : "focus:border-black"}
+          className={`w-full p-2 border rounded-md shadow-sm transition 
+          focus:outline-none focus:ring-orange-400 focus:border-orange-400 focus:ring-1
+          disabled:opacity-70 disabled:cursor-not-allowed 
+          ${formatPrice ? "pl-8" : ""}
+          ${errors[id] ? "border-red-500" : "border-neutral-300"}
+          ${errors[id] ? "focus:border-rose-500" : "focus:border-black"}
         `}
         />
       </div>
