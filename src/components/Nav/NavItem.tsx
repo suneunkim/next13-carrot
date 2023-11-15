@@ -1,3 +1,4 @@
+import { signIn, useSession } from "next-auth/react";
 import React from "react";
 
 interface NavItemProps {
@@ -5,8 +6,9 @@ interface NavItemProps {
 }
 
 const NavItem = ({ setNavVisible }: NavItemProps) => {
+  const { data } = useSession();
   const toggleNav = () => {
-    setNavVisible((prev) => !prev);
+    setNavVisible(prev => !prev);
   };
 
   return (
@@ -15,14 +17,27 @@ const NavItem = ({ setNavVisible }: NavItemProps) => {
         <ul className="hidden items-center text-lg space-x-5 md:flex">
           <li>중고거래</li>
           <li>동네생활</li>
-          <input className="w-[16rem] bg-gray-200 text-sm p-2 rounded-md" placeholder="물품이나 동네를 검색해보세요" />
-          <button className="block border border-gray-200 p-[0.3rem] px-3 text-base rounded-md box-border">
-            채팅하기
+          <input
+            className="w-[16rem] bg-gray-200 text-sm p-2 rounded-md"
+            placeholder="물품이나 동네를 검색해보세요"
+          />
+          <button
+            onClick={() => signIn()}
+            className="block border border-gray-200 p-[0.3rem] px-3 text-base rounded-md box-border"
+          >
+            {data === null ? "로그인" : "로그아웃"}
           </button>
         </ul>
+        {/* 반응형 nav 아이콘 */}
         <ul className="flex space-x-5 md:hidden">
           <li className="md:block">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
               <path
                 fillRule="evenodd"
                 clipRule="evenodd"
@@ -33,7 +48,13 @@ const NavItem = ({ setNavVisible }: NavItemProps) => {
           </li>
           <li className="md:block">
             <button onClick={toggleNav}>
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
                 <path
                   fillRule="evenodd"
                   clipRule="evenodd"
