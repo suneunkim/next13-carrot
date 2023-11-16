@@ -6,7 +6,9 @@ interface NavItemProps {
 }
 
 const NavItem = ({ setNavVisible }: NavItemProps) => {
-  const { data } = useSession();
+  const session = useSession();
+  console.log(session);
+
   const toggleNav = () => {
     setNavVisible(prev => !prev);
   };
@@ -25,7 +27,7 @@ const NavItem = ({ setNavVisible }: NavItemProps) => {
             onClick={() => signIn()}
             className="block border border-gray-200 p-[0.3rem] px-3 text-base rounded-md box-border"
           >
-            {data === null ? "로그인" : "로그아웃"}
+            {/* {data === null ? "로그인" : "로그아웃"} */}
           </button>
         </ul>
         {/* 반응형 nav 아이콘 */}

@@ -29,11 +29,9 @@ export const authOptions: NextAuthOptions = {
         });
         const user = await res.json();
 
-        // If no error and we have user data, return it
         if (res.ok && user) {
           return user;
         }
-        // Return null if user data could not be retrieved
         return null;
       },
     }),
@@ -41,6 +39,19 @@ export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   session: {
     strategy: "jwt",
+  },
+  jwt: {
+    secret: process.env.JWT_SECRET,
+    maxAge: 30 * 24 * 60 * 60, // 30 days
+  },
+  callbacks: {
+    async jwt({ token, user }) {
+      return { ...token, ...user };
+    }, // token 가져오기
+    async session({ session, token }) {
+      session.user = token;
+      return session;
+    }, // session.user에 token 넣기
   },
 };
 
