@@ -1,16 +1,23 @@
-import { signIn, useSession } from "next-auth/react";
+import { User } from "@prisma/client";
+import { signIn, signOut } from "next-auth/react";
 import React from "react";
 
 interface NavItemProps {
   setNavVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  currentUser: User | null;
 }
 
-const NavItem = ({ setNavVisible }: NavItemProps) => {
-  const session = useSession();
-  console.log(session);
-
+const NavItem = ({ currentUser, setNavVisible }: NavItemProps) => {
   const toggleNav = () => {
     setNavVisible(prev => !prev);
+  };
+
+  const handleAuthentication = () => {
+    if (currentUser === null) {
+      signIn();
+    } else {
+      signOut();
+    }
   };
 
   return (
@@ -24,10 +31,10 @@ const NavItem = ({ setNavVisible }: NavItemProps) => {
             placeholder="물품이나 동네를 검색해보세요"
           />
           <button
-            onClick={() => signIn()}
+            onClick={handleAuthentication}
             className="block border border-gray-200 p-[0.3rem] px-3 text-base rounded-md box-border"
           >
-            {/* {data === null ? "로그인" : "로그아웃"} */}
+            {currentUser === null ? "로그인" : "로그아웃"}
           </button>
         </ul>
         {/* 반응형 nav 아이콘 */}

@@ -2,10 +2,15 @@
 import React, { useState } from "react";
 import NavItem from "./NavItem";
 import Link from "next/link";
-import { useSession } from "next-auth/react";
+import { User } from "@prisma/client";
 
-const NavBar = () => {
+interface NavBarProps {
+  currentUser: User | null;
+}
+
+const NavBar = ({ currentUser }: NavBarProps) => {
   const [isNavVisible, setNavVisible] = useState(false);
+  // 반응형 nav 목록 아이콘을 토글로 보이기/숨기기
 
   return (
     <div>
@@ -58,7 +63,8 @@ const NavBar = () => {
             </svg>
           </span>
         </Link>
-        <NavItem setNavVisible={setNavVisible} />
+        <p>{currentUser?.name}님 안녕하세요!</p>
+        <NavItem currentUser={currentUser} setNavVisible={setNavVisible} />
       </nav>
       {/* 메뉴 아이콘 토글 */}
       <nav>
