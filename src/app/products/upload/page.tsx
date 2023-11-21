@@ -2,6 +2,7 @@
 import Button from "@/components/Button";
 import Container from "@/components/Container";
 import Heading from "@/components/Heading";
+import ImageUpload from "@/components/ImageUpload";
 import Input from "@/components/Input";
 import TextArea from "@/components/TextArea";
 import React, { useState } from "react";
@@ -14,6 +15,8 @@ const ProductUploadPage = () => {
     register,
     handleSubmit,
     formState: { errors },
+    watch,
+    setValue,
   } = useForm<FieldValues>({
     defaultValues: {
       title: "",
@@ -25,6 +28,12 @@ const ProductUploadPage = () => {
       price: "",
     },
   });
+
+  const imageSrc = watch("imageSrc");
+  const setCustomValue = (id: string, value: any) => {
+    setValue(id, value);
+    //onChange로 받은 value를 RHF의 setValue로 넣어준다.
+  };
 
   const onValid: SubmitHandler<FieldValues> = formData => {
     //setIsLoading(true);\
@@ -40,6 +49,10 @@ const ProductUploadPage = () => {
             subtitle={`${
               errors.title ? errors.title.message : "자세히 작성하면 좋습니다."
             }`}
+          />
+          <ImageUpload
+            onChange={value => setCustomValue("imageSrc", value)}
+            value={imageSrc}
           />
           <Input
             id="title"
@@ -77,7 +90,7 @@ const ProductUploadPage = () => {
           >
             {/* 카테고리 */}
           </div>
-          <div>{/* 지도 */}</div>
+          <div>{/* 지도 */}지도</div>
           <Button label="작성 완료" />
         </form>
       </div>

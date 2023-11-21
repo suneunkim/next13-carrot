@@ -10,7 +10,14 @@ interface ButtonProps {
   icon?: IconType;
 }
 
-const Button = ({ label, onClick, disabled, outline, small, icon: Icon }: ButtonProps) => {
+const Button = ({
+  label,
+  onClick,
+  disabled,
+  outline,
+  small,
+  icon: Icon,
+}: ButtonProps) => {
   return (
     <button
       type="submit"
@@ -24,6 +31,7 @@ const Button = ({ label, onClick, disabled, outline, small, icon: Icon }: Button
         hover:opacity-80
         transition
         w-full
+        mb-10
         ${outline ? "border border-neutral-300" : "bg-orange-400"}
         ${outline ? "border-black" : "border-orange-400"}
         ${outline ? "text-black" : "text-white"}
