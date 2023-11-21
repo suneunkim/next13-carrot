@@ -29,6 +29,6 @@ export async function POST(request: Request) {
     },
   });
   return NextResponse.json({ ok: true, user });
-
+  // 아래처럼도 사용 할 수 있음.
   return new Response("User registered successfully", { status: 200 });
 }
