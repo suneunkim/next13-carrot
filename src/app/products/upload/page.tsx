@@ -7,7 +7,8 @@ import Input from "@/components/Input";
 import TextArea from "@/components/TextArea";
 import categories from "@/components/categories/Categories";
 import CategoryInput from "@/components/categories/CategoryInput";
-import React, { useState } from "react";
+import dynamic from "next/dynamic";
+import React, { useEffect, useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 
 const ProductUploadPage = () => {
@@ -24,8 +25,8 @@ const ProductUploadPage = () => {
       title: "",
       description: "",
       category: "",
-      latitude: 33.5523,
-      longitude: 126.7951,
+      latitude: 31.5523,
+      longitude: 122.7951,
       imageSrc: "",
       price: "",
     },
@@ -33,6 +34,25 @@ const ProductUploadPage = () => {
 
   const imageSrc = watch("imageSrc");
   const category = watch("category");
+
+  const latitude = watch("latitude");
+  const longitude = watch("longitude");
+
+  const KaKaoMap = dynamic(() => import("../../../components/KaKaoMap"), {
+    ssr: false,
+  });
+
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(
+      position => {
+        setValue("latitude", position.coords.latitude);
+        setValue("longitude", position.coords.longitude);
+      },
+      error => {
+        console.error(error);
+      }
+    );
+  }, []);
 
   const setCustomValue = (id: string, value: any) => {
     setValue(id, value);
@@ -103,7 +123,12 @@ const ProductUploadPage = () => {
               </div>
             ))}
           </div>
-          <div>{/* 지도 */}지도</div>
+          <hr />
+          <KaKaoMap
+            setCustomValue={setCustomValue}
+            latitude={latitude}
+            longitude={longitude}
+          />
           <Button label="작성 완료" />
         </form>
       </div>

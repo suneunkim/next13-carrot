@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import NavBar from "@/components/Nav/NavBar";
 import getCurrentUser from "./\baction/getCurrentUser";
+import Script from "next/script";
 
 export const metadata: Metadata = {
   title: "당근 편리해요",
@@ -19,6 +20,11 @@ export default async function RootLayout({
       <body>
         <NavBar currentUser={currentUser} />
         {children}
+        {/* <Script
+          type="text/javascript"
+          src="//dapi.kakao.com/v2/maps/sdk.js?appkey=bc7675799afe86b5828a32b0c9affcb2"
+        ></Script> */}
+        <Script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=bc7675799afe86b5828a32b0c9affcb2&libraries=services,clusterer&autoload=false"></Script>
       </body>
     </html>
   );
