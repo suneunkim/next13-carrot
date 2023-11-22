@@ -7,11 +7,14 @@ import Input from "@/components/Input";
 import TextArea from "@/components/TextArea";
 import categories from "@/components/categories/Categories";
 import CategoryInput from "@/components/categories/CategoryInput";
+import axios from "axios";
 import dynamic from "next/dynamic";
-import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import React, { Suspense, useEffect, useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 
 const ProductUploadPage = () => {
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
   const {
@@ -40,15 +43,17 @@ const ProductUploadPage = () => {
 
   const KaKaoMap = dynamic(() => import("../../../components/KaKaoMap"), {
     ssr: false,
+    loading: () => <div>로딩중...</div>,
   });
 
+  // 현재 위치로 지도를 설정. Map의 center를 수정해준다.
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
-      position => {
+      (position) => {
         setValue("latitude", position.coords.latitude);
         setValue("longitude", position.coords.longitude);
       },
-      error => {
+      (error) => {
         console.error(error);
       }
     );
@@ -59,9 +64,16 @@ const ProductUploadPage = () => {
     //onChange로 받은 value를 RHF의 setValue로 넣어준다.
   };
 
-  const onValid: SubmitHandler<FieldValues> = formData => {
-    //setIsLoading(true);\
-    console.log(formData);
+  const onValid: SubmitHandler<FieldValues> = async (formData) => {
+    try {
+      setIsLoading(true);
+      const response = await axios.post("/api/products", formData);
+      router.push(`/products/${response.data.id}`);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -75,7 +87,7 @@ const ProductUploadPage = () => {
             }`}
           />
           <ImageUpload
-            onChange={value => setCustomValue("imageSrc", value)}
+            onChange={(value) => setCustomValue("imageSrc", value)}
             value={imageSrc}
           />
           <Input
@@ -112,10 +124,10 @@ const ProductUploadPage = () => {
         overflow-y-auto
         "
           >
-            {categories.map(item => (
+            {categories.map((item) => (
               <div key={item.label} className="col-span-1">
                 <CategoryInput
-                  onClick={category => setCustomValue("category", category)}
+                  onClick={(category) => setCustomValue("category", category)}
                   selected={category === item.path}
                   label={item.label}
                   path={item.path}
@@ -124,11 +136,13 @@ const ProductUploadPage = () => {
             ))}
           </div>
           <hr />
-          <KaKaoMap
-            setCustomValue={setCustomValue}
-            latitude={latitude}
-            longitude={longitude}
-          />
+          <Suspense fallback={<p>로딩중입니다.</p>}>
+            <KaKaoMap
+              setCustomValue={setCustomValue}
+              latitude={latitude}
+              longitude={longitude}
+            />
+          </Suspense>
           <Button label="작성 완료" />
         </form>
       </div>
