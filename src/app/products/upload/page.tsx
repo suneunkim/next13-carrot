@@ -68,7 +68,8 @@ const ProductUploadPage = () => {
     try {
       setIsLoading(true);
       const response = await axios.post("/api/products", formData);
-      router.push(`/products/${response.data.id}`);
+      router.push(`/products/${response.data.product.id}`);
+      console.log(response);
     } catch (error) {
       console.error(error);
     } finally {

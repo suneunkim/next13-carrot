@@ -32,9 +32,11 @@ const Button = ({
         transition
         w-full
         mb-10
+        p-3
         ${outline ? "border border-neutral-300" : "bg-orange-400"}
         ${outline ? "border-black" : "border-orange-400"}
         ${outline ? "text-black" : "text-white"}
+        ${outline && "hover:text-gray-600"}
         ${small ? "text-sm" : "text-md"}
         ${small ? "py-2" : "py-3"}
         ${small ? "font-medium" : "font-semibold"}

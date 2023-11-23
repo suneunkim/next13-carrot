@@ -1,6 +1,8 @@
-export default function Home() {
+import React from "react";
+
+const HomeBanner = () => {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between py-8 min-w-max">
+    <div className="flex flex-col items-center justify-between py-8 min-w-max">
       <div className="w-full flex items-center justify-between h-80 bg-yellow-200 relative">
         <div className="w-66 p-20">
           <h2 className="font-bold text-4xl">이웃 간 중고거래</h2>
@@ -15,6 +17,8 @@ export default function Home() {
           src="https://d1unjqcospf8gs.cloudfront.net/assets/home/main/3x/fleamarket-39d1db152a4769a6071f587fa9320b254085d726a06f61d544728b9ab3bd940a.webp"
         />
       </div>
-    </main>
+    </div>
   );
-}
+};
+
+export default HomeBanner;
