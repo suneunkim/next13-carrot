@@ -1,13 +1,17 @@
 "use client";
-import { Product, User } from "@prisma/client";
+import { Fav, Product, User } from "@prisma/client";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React from "react";
 import HeartButton from "./HeartButton";
 
+export interface IUserFavs extends User {
+  favs: Fav[];
+}
+
 interface ProductCardProps {
   data: Product;
-  currentUser: User | null;
+  currentUser: IUserFavs | null;
 }
 
 const ProductCard = ({ data, currentUser }: ProductCardProps) => {
@@ -16,12 +20,15 @@ const ProductCard = ({ data, currentUser }: ProductCardProps) => {
   return (
     <div
       onClick={() => router.push(`/products/${data?.id}`)}
-      className="w-[280px] cursor-pointer group space-y-[1px]"
+      className="w-[280px] cursor-pointer group space-y-[3px]"
     >
-      <div className="relative w-full overflow-hidden aspect-square rounded-lg">
+      <div
+        className="relative w-full overflow-hidden aspect-square rounded-lg mb-3 transition group-hover:border-2 border-black/30
+      "
+      >
         {data?.imageSrc ? (
           <Image
-            className="object-cover w-full h-full transition group-hover:scale-110"
+            className="object-cover w-full h-full "
             src={data?.imageSrc}
             fill
             sizes="auto"
@@ -32,9 +39,15 @@ const ProductCard = ({ data, currentUser }: ProductCardProps) => {
             이미지가 없습니다.
           </div>
         )}
+        {/* 로그인 한 유저에게만 하트 토글 보이게 하기 */}
+        <div className="absolute top-3 right-3">
+          <HeartButton productId={data.id} currentUser={currentUser} />
+        </div>
       </div>
       {/* 상품 정보 */}
-      <div className="text-lg my-[1px] text-neutral-600">{data?.title}</div>
+      <div className="text-lg my-[1px] mt-2 text-neutral-600">
+        {data?.title}
+      </div>
       <div className="font-semibold">{data?.price}원</div>
       <div className="flex justify-between text-gray-400 text-sm">
         <div className="space-x-2">
@@ -43,7 +56,6 @@ const ProductCard = ({ data, currentUser }: ProductCardProps) => {
         </div>
         <div>1일 전</div>
       </div>
-      <HeartButton />
       {/* <div>{data?.createAt}</div> */}
     </div>
   );

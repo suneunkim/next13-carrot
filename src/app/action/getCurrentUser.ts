@@ -19,6 +19,9 @@ export default async function getCurrentUser() {
       where: {
         email: session.user.email,
       },
+      include: {
+        favs: true,
+      },
     });
 
     if (!currentUser) {
