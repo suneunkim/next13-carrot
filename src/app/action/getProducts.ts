@@ -34,6 +34,13 @@ export default async function getProducts(params: ProductsParams) {
       orderBy: {
         createAt: "desc",
       },
+      include: {
+        _count: {
+          select: {
+            favs: true,
+          },
+        },
+      },
     });
 
     return {

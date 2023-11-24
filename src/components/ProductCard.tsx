@@ -4,13 +4,20 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React from "react";
 import HeartButton from "./HeartButton";
+import { fromNow } from "@/helpers/dayjs";
 
 export interface IUserFavs extends User {
   favs: Fav[];
 }
 
+export interface IProductFavs extends Product {
+  _count: {
+    favs: number;
+  };
+}
+
 interface ProductCardProps {
-  data: Product;
+  data: IProductFavs;
   currentUser: IUserFavs | null;
 }
 
@@ -51,10 +58,10 @@ const ProductCard = ({ data, currentUser }: ProductCardProps) => {
       <div className="font-semibold">{data?.price}원</div>
       <div className="flex justify-between text-gray-400 text-sm">
         <div className="space-x-2">
-          <span>관심 0</span>
+          <span>관심 {data?._count?.favs}</span>
           <span>채팅 0</span>
         </div>
-        <div>1일 전</div>
+        <div>{fromNow(data.createAt)}</div>
       </div>
       {/* <div>{data?.createAt}</div> */}
     </div>
