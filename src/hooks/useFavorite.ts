@@ -1,4 +1,4 @@
-import { IUserFavs } from "@/components/ProductCard";
+import { IUserFavs } from "@/components/Product/ProductCard";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useMemo } from "react";

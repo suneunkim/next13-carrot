@@ -3,7 +3,7 @@ import { Fav, Product, User } from "@prisma/client";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React from "react";
-import HeartButton from "./HeartButton";
+import HeartButton from "../HeartButton";
 import { fromNow } from "@/helpers/dayjs";
 
 export interface IUserFavs extends User {
@@ -55,7 +55,9 @@ const ProductCard = ({ data, currentUser }: ProductCardProps) => {
       <div className="text-lg my-[1px] mt-2 text-neutral-600">
         {data?.title}
       </div>
-      <div className="font-semibold">{data?.price}원</div>
+      <div className="font-semibold">
+        {data?.price.toLocaleString("ko-KR")}원
+      </div>
       <div className="flex justify-between text-gray-400 text-sm">
         <div className="space-x-2">
           <span>관심 {data?._count?.favs}</span>
@@ -63,7 +65,6 @@ const ProductCard = ({ data, currentUser }: ProductCardProps) => {
         </div>
         <div>{fromNow(data.createAt)}</div>
       </div>
-      {/* <div>{data?.createAt}</div> */}
     </div>
   );
 };

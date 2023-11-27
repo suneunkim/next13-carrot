@@ -31,7 +31,7 @@ const Button = ({
         hover:opacity-80
         transition
         w-full
-        mb-10
+        my-10
         p-3
         ${outline ? "border border-neutral-300" : "bg-orange-400"}
         ${outline ? "border-black" : "border-orange-400"}

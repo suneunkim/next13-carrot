@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-
+// @ts-ignore
 import usePagination from "@lucasmogari/react-pagination";
 import PaginationLink from "./PaginationLink";
 

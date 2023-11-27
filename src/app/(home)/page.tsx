@@ -2,7 +2,7 @@ import HomeBanner from "@/components/HomeBanner";
 import getProducts, { ProductsParams } from "../\baction/getProducts";
 import EmptyState from "@/components/EmptyState";
 import Container from "@/components/Container";
-import ProductCard from "@/components/ProductCard";
+import ProductCard from "@/components/Product/ProductCard";
 import getCurrentUser from "../\baction/getCurrentUser";
 import FloatingButton from "@/components/FloatingButton";
 import Categories from "@/components/categories/Categories";
