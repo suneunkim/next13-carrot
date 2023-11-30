@@ -1,10 +1,10 @@
 "use client";
-import Button from "@/components/Button";
+import Button from "@/components/elements/Button";
 import Container from "@/components/Container";
 import Heading from "@/components/Heading";
 import ImageUpload from "@/components/ImageUpload";
-import Input from "@/components/Input";
-import TextArea from "@/components/TextArea";
+import Input from "@/components/elements/Input";
+import TextArea from "@/components/elements/TextArea";
 import { categories } from "@/components/categories/Categories";
 import CategoryInput from "@/components/categories/CategoryInput";
 import axios from "axios";

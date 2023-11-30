@@ -1,7 +1,7 @@
 import React from "react";
 import { IUserFavs } from "./ProductCard";
 import Image from "next/image";
-import HeartButton from "../HeartButton";
+import HeartButton from "../elements/HeartButton";
 
 interface ProductHeadProps {
   imageSrc: string;

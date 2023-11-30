@@ -1,7 +1,7 @@
 "use client";
 import { useRouter } from "next/navigation";
-import Button from "@/components/Button";
-import Input from "@/components/Input";
+import Button from "@/components/elements/Button";
+import Input from "@/components/elements/Input";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 import React, { useState } from "react";
@@ -25,7 +25,7 @@ const LoginPage = () => {
     setIsLoading(true);
     try {
       const data = signIn("credentials", formData);
-      console.log(data);
+      router.replace("/");
     } catch (error) {
       console.error(error);
     } finally {

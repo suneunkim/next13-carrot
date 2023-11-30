@@ -1,5 +1,5 @@
 "use client";
-import Button from "@/components/Button";
+import Button from "@/components/elements/Button";
 import Container from "@/components/Container";
 import { IProductFavs, IUserFavs } from "@/components/Product/ProductCard";
 import ProductHead from "@/components/Product/ProductHead";
@@ -9,6 +9,7 @@ import { User } from "@prisma/client";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import React from "react";
+import axios from "axios";
 
 interface ProductClientProps {
   product: IProductFavs & { user: User };
@@ -23,6 +24,17 @@ const ProductClient = ({ product, currentUser }: ProductClientProps) => {
   });
   const category = categories.find((item) => item.path === product.category);
 
+  const myProduct = currentUser?.id === product.user.id;
+
+  const handleButtonClick = async () => {
+    try {
+      const response = await axios.post("/api/chat");
+      console.log(response);
+      //router.push("/chat")
+    } catch (error) {
+      console.error(error);
+    }
+  };
   return (
     <Container>
       <div className="max-w-screen-md 5xl mx-auto">
@@ -51,12 +63,18 @@ const ProductClient = ({ product, currentUser }: ProductClientProps) => {
           </div>
         </div>
         <div>
-          <Button
-            onClick={() => router.push("/chat")}
-            label="이 유저와 채팅하기"
-          />
+          {currentUser?.id ? (
+            <Button
+              onClick={handleButtonClick}
+              label={myProduct ? "내 상품입니다" : "이 유저와 채팅하기"}
+              disabled={myProduct}
+            />
+          ) : (
+            ""
+          )}
         </div>
       </div>
+      <br className="my-10" />
     </Container>
   );
 };

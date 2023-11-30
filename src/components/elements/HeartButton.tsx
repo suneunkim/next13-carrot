@@ -1,7 +1,7 @@
 import { User } from "@prisma/client";
 import React from "react";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
-import { IUserFavs } from "./Product/ProductCard";
+import { IUserFavs } from "../Product/ProductCard";
 import useFavorite from "@/hooks/useFavorite";
 
 interface HeartButtonProps {

@@ -53,18 +53,21 @@ model VerificationRequest {
 }
 
 model User {
-  id             String    @id @default(cuid())
-  name           String?
-  hashedPassword String?
-  email          String?   @unique
-  emailVerified  DateTime?
-  image          String?
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime  @updatedAt
-  accounts       Account[]
-  sessions       Session[]
-  product        Product[]
-  favs           Fav[]
+  id               String         @id @default(cuid())
+  name             String?
+  hashedPassword   String?
+  email            String?        @unique
+  emailVerified    DateTime?
+  image            String?
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+  accounts         Account[]
+  sessions         Session[]
+  product          Product[]
+  favs             Fav[]
+  conversations    Conversation[]
+  sentMessages     Message[]      @relation("sender")
+  receivedMessages Message[]      @relation("receiver")
 }
 
 model Product {
@@ -96,4 +99,32 @@ model Fav {
 
   @@index([userId])
   @@index([productId])
+}
+
+model Conversation {
+  id         Int       @id @default(autoincrement())
+  createAt   DateTime  @default(now())
+  name       String?
+  senderId   String
+  receiverId String
+  users      User[]
+  messages   Message[]
+}
+
+model Message {
+  id             Int          @id @default(autoincrement())
+  createAt       DateTime     @default(now())
+  updateAt       DateTime     @updatedAt
+  text           String?      @db.MediumText
+  image          String?
+  sender         User         @relation(name: "sender", fields: [senderId], references: [id])
+  senderId       String
+  receiver       User         @relation(name: "receiver", fields: [receiverId], references: [id])
+  receiverId     String
+  conversation   Conversation @relation(fields: [conversationId], references: [id])
+  conversationId Int
+
+  @@index([conversationId])
+  @@index([receiverId])
+  @@index([senderId])
 }
