@@ -9,7 +9,6 @@ import { User } from "@prisma/client";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import React from "react";
-import axios from "axios";
 
 interface ProductClientProps {
   product: IProductFavs & { user: User };
@@ -27,14 +26,18 @@ const ProductClient = ({ product, currentUser }: ProductClientProps) => {
   const myProduct = currentUser?.id === product.user.id;
 
   const handleButtonClick = async () => {
-    try {
-      const response = await axios.post("/api/chat");
-      console.log(response);
-      //router.push("/chat")
-    } catch (error) {
-      console.error(error);
-    }
+    router.push("chat");
+    // const postData = {
+    // }
+    // try {
+    //   const response = await axios.post("/api/chat");
+    //   console.log(response);
+    //   //router.push("/chat")
+    // } catch (error) {
+    //   console.error(error);
+    // }
   };
+
   return (
     <Container>
       <div className="max-w-screen-md 5xl mx-auto">

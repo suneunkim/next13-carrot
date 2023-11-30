@@ -1,7 +1,6 @@
-import { on } from "events";
 import { CldUploadWidget } from "next-cloudinary";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import { TbPhotoPlus } from "react-icons/tb";
 
 interface ImageUploadProps {
@@ -10,8 +9,14 @@ interface ImageUploadProps {
 }
 
 const ImageUpload = ({ onChange, value }: ImageUploadProps) => {
+  const [showImages, setShowImages] = useState<string[]>([]);
+
   const handleUpload = (result: any) => {
+    const newImage = result.info.secure_url;
+    const newImages = [...showImages, newImage];
+    setShowImages(newImages);
     onChange(result.info.secure_url);
+    console.log(showImages);
   };
   const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET;
   return (
@@ -24,21 +29,44 @@ const ImageUpload = ({ onChange, value }: ImageUploadProps) => {
     >
       {({ open }) => {
         return (
-          <div
-            className="relative flex flex-col items-center justify-center gap-4 p-52 transition border border-dashed cursor-pointer hover:opacity-70 border-neutral-400 text-neutral-400"
-            onClick={() => open?.()}
-          >
-            <TbPhotoPlus size={50} />
-            {value && (
-              <div className="absolute inset-0 w-full h-full">
-                <Image
-                  fill
-                  style={{ objectFit: "cover" }}
-                  src={value}
-                  alt="image"
-                />
+          <div>
+            {showImages.length > 1 ? (
+              ""
+            ) : (
+              <div
+                className="relative flex flex-col items-center justify-center gap-4 p-52 transition border border-dashed cursor-pointer hover:opacity-70 border-neutral-400 text-neutral-400"
+                onClick={() => open?.()}
+              >
+                <TbPhotoPlus size={50} />
+                {value && (
+                  <div className="absolute inset-0 w-full h-full">
+                    <div className="">
+                      <Image
+                        fill
+                        style={{ objectFit: "cover" }}
+                        src={value}
+                        alt="image"
+                      />
+                    </div>
+                  </div>
+                )}
               </div>
             )}
+
+            {/* <div className="flex justify-around w-full">
+              {value &&
+                showImages.map((image, i) => (
+                  <div key={i} className="">
+                    <Image
+                      style={{ objectFit: "contain" }}
+                      src={image}
+                      alt="image"
+                      width={250}
+                      height={250}
+                    />
+                  </div>
+                ))}
+            </div> */}
           </div>
         );
       }}

@@ -7,13 +7,20 @@ export interface ProductsParams {
   category?: string;
   page?: number;
   skip?: number;
+  search?: string;
 }
 
 export default async function getProducts(params: ProductsParams) {
   try {
-    const { latitude, logitude, category, skip } = params;
+    const { latitude, logitude, category, skip, search } = params;
 
     let query: any = {};
+
+    if (search) {
+      query.title = {
+        contains: search,
+      };
+    }
 
     if (category) {
       query.category = category;

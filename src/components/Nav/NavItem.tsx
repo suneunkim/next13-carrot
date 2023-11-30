@@ -1,6 +1,7 @@
 import { User } from "@prisma/client";
 import { signIn, signOut } from "next-auth/react";
-import React from "react";
+import Link from "next/link";
+import React, { useState } from "react";
 
 interface NavItemProps {
   setNavVisible: React.Dispatch<React.SetStateAction<boolean>>;
@@ -9,7 +10,7 @@ interface NavItemProps {
 
 const NavItem = ({ currentUser, setNavVisible }: NavItemProps) => {
   const toggleNav = () => {
-    setNavVisible(prev => !prev);
+    setNavVisible((prev) => !prev);
   };
 
   const handleAuthentication = () => {
@@ -20,6 +21,11 @@ const NavItem = ({ currentUser, setNavVisible }: NavItemProps) => {
     }
   };
 
+  const [searchValue, setSearchValue] = useState("");
+  const handleChange = (e: any) => {
+    setSearchValue(e.target.value);
+  };
+
   return (
     <div className="flex flex-col">
       <div className="flex justify-between">
@@ -27,9 +33,12 @@ const NavItem = ({ currentUser, setNavVisible }: NavItemProps) => {
           <li>중고거래</li>
           <li>동네생활</li>
           <input
+            value={searchValue}
+            onChange={handleChange}
             className="w-[16rem] bg-gray-200 text-sm p-2 rounded-md"
             placeholder="물품이나 동네를 검색해보세요"
           />
+          <Link href={`/?search=${searchValue}`}>검색</Link>
           <button
             onClick={handleAuthentication}
             className="block border border-gray-200 p-[0.3rem] px-3 text-base rounded-md box-border"
