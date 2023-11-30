@@ -47,7 +47,7 @@ const NavItem = ({ currentUser, setNavVisible }: NavItemProps) => {
           </button>
         </ul>
         {/* 반응형 nav 아이콘 */}
-        <ul className="flex space-x-5 md:hidden">
+        <ul className="flex space-x-5 md:hidden ">
           <li className="md:block">
             <svg
               width="24"

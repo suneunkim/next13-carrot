@@ -14,7 +14,7 @@ const NavBar = ({ currentUser }: NavBarProps) => {
 
   return (
     <div>
-      <nav className="flex items-center p-5 sm:justify-between space-x-5">
+      <nav className="flex items-center justify-between p-5 sm:justify-between space-x-5">
         {/* 당근 로고 */}
         <Link href="/">
           <span>
@@ -67,18 +67,11 @@ const NavBar = ({ currentUser }: NavBarProps) => {
         <NavItem currentUser={currentUser} setNavVisible={setNavVisible} />
       </nav>
       {/* 메뉴 아이콘 토글 */}
-      <nav>
-        <ul className={`transition  ${isNavVisible ? "block" : "hidden"}`}>
+      <nav className={`transition ${isNavVisible ? "block" : "hidden"}`}>
+        <ul className="absolute w-full bg-gray-200 z-10">
           <li className="p-3 transition hover:bg-gray-100">중고거래</li>
           <li className="p-3 transition hover:bg-gray-100">동네생활</li>
         </ul>
-        <div
-          className={`transition ${
-            isNavVisible
-              ? "transition opacity-80 bg-gray-300 w-full h-screen"
-              : ""
-          }`}
-        ></div>
       </nav>
     </div>
   );
